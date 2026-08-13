@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XPANSWARA SPECTRALIS 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playball&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ec1d8b;
+    --pink-soft:#ff9fce;
+    --pink-pale:#ffe1f1;
+    --lavender:#c9a8e9;
+    --mint:#a8e6cf;
+    --butter:#ffe39b;
+    --sky:#a8d8ea;
+    --cream:#fff9f5;
+    --ink:#4a2e44;
+    --ink-soft:#7a5c74;
+    --radius-lg:28px;
+    --radius-md:18px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Baloo 2', sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:hidden;
+  }
+  .script{font-family:'Playball', cursive; font-weight:400;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  section{position:relative; z-index:1;}
+
+  /* ===== background (actual Figma asset) ===== */
+  .blobfield{
+    position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,249,245,.68), rgba(255,249,245,.8)),
+      url("https://www.figma.com/api/mcp/asset/38bdbd79-35ce-4ed9-b210-bd0d617d0086.png");
+    background-size:cover;
+    background-position:top center;
+    background-repeat:no-repeat;
+  }
+
+  /* ===== scroll reveal ===== */
+  .reveal{opacity:0; transform:translateY(30px); transition:opacity .7s cubic-bezier(.22,.9,.34,1), transform .7s cubic-bezier(.22,.9,.34,1);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.12s;}
+  .reveal-delay-2{transition-delay:.24s;}
+
+  /* ===== section tiles (alternating banded background) ===== */
+  .band{
+    background:rgba(255,255,255,.55); backdrop-filter:blur(3px);
+    border-top:1px solid rgba(236,29,139,.07); border-bottom:1px solid rgba(236,29,139,.07);
+  }
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ===== nav ===== */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,249,245,0.85); backdrop-filter:blur(10px);
+    border-bottom:2px solid var(--pink-pale);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:14px 32px;}
+  .brand img{height:40px; width:auto; object-fit:contain;}
+  .navlinks{display:flex; gap:28px; font-weight:600; font-size:15px; color:var(--ink-soft);}
+  .navlinks a{position:relative; padding:4px 0;}
+  .navlinks a:hover{color:var(--pink);}
+  .navcta{
+    background:var(--pink); color:#fff; padding:10px 22px; border-radius:999px;
+    font-weight:700; font-size:14px; box-shadow:0 6px 0 #b5106a;
+  }
+  .navcta:hover{transform:translateY(2px); box-shadow:0 4px 0 #b5106a;}
+
+  /* ===== hero ===== */
+  .hero{padding:44px 0 28px; min-height:0;}
+  .hero .wrap{display:grid; grid-template-columns:1.05fr 0.95fr; gap:32px; align-items:center;}
+  .hero-badges{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+  .eyebrow{
+    display:inline-block; background:#fff; border:2px solid var(--pink-soft); color:var(--pink);
+    font-weight:700; font-size:13px; letter-spacing:.08em; padding:6px 16px; border-radius:999px;
+  }
+  .eyebrow-solid{background:var(--pink); color:#fff; border-color:var(--pink);}
+  .hero-logo-plate{
+    display:inline-block; background:linear-gradient(135deg, var(--ink) 0%, var(--pink) 100%);
+    border-radius:20px; padding:14px 24px 10px; margin-bottom:14px;
+    box-shadow:0 16px 34px rgba(74,46,68,.32);
+  }
+  .hero-logo{width:280px; max-width:100%; display:block; filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));}
+  .hero p.tagline{font-size:17px; color:var(--ink-soft); max-width:460px; margin:0 0 18px; line-height:1.55;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:18px; margin-bottom:0;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:15px;
+    padding:13px 24px; border-radius:999px; border:none; cursor:pointer;
+  }
+  .btn-primary{background:var(--pink); color:#fff; box-shadow:0 6px 0 #b5106a;}
+  .btn-primary:hover{transform:translateY(2px); box-shadow:0 4px 0 #b5106a;}
+  .btn-ghost{background:#fff; color:var(--pink); border:2px solid var(--pink-soft); box-shadow:0 6px 0 #ffd3ea;}
+  .btn-ghost:hover{transform:translateY(2px); box-shadow:0 4px 0 #ffd3ea;}
+
+  .countdown{display:flex; gap:10px;}
+  .countdown .box{
+    background:#fff; border-radius:14px; padding:10px 6px; width:70px; text-align:center;
+    box-shadow:0 6px 0 var(--pink-pale);
+  }
+  .countdown .box .num{font-size:23px; font-weight:800; color:var(--pink);}
+  .countdown .box .lbl{font-size:10.5px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+  .countdown-label{font-size:12.5px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px;}
+
+  .hero-art{position:relative; display:flex; align-items:center; justify-content:center;}
+  .hero-art .backdrop{
+    position:absolute; width:360px; height:360px; border-radius:50%;
+    background:linear-gradient(160deg,#fff 0%, var(--pink-pale) 100%);
+    box-shadow:0 24px 50px rgba(122,92,116,.16), inset 0 0 0 1px rgba(236,29,139,.08);
+  }
+  .hero-art .backdrop-ring{
+    position:absolute; width:410px; height:410px; border-radius:50%;
+    border:1.5px solid var(--pink-pale);
+  }
+  .hero-art .glow{
+    position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(255,159,206,.45), transparent 70%);
+    filter:blur(10px);
+  }
+  .hero-art img{position:relative; width:310px; filter:drop-shadow(0 20px 30px rgba(236,29,139,.25));
+    animation:float 5s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)}}
+
+  .hero-facts{display:flex; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px; color:var(--ink-soft); font-weight:700; margin-top:18px;}
+  .hero-facts strong{color:var(--pink); font-weight:800;}
+  .hero-facts .fact-sep{color:var(--pink-soft); font-size:11px;}
+
+  .hero{position:relative;}
+  .scroll-cue{
+    position:absolute; left:50%; bottom:2px; transform:translateX(-50%);
+    width:26px; height:40px; border:2px solid var(--pink-soft); border-radius:20px;
+    display:flex; align-items:flex-start; justify-content:center; padding-top:6px;
+  }
+  .scroll-cue span{width:5px; height:8px; background:var(--pink); border-radius:3px; animation:scrollDot 1.6s ease-in-out infinite;}
+  @keyframes scrollDot{0%{transform:translateY(0); opacity:1;} 70%{transform:translateY(12px); opacity:0;} 100%{opacity:0;}}
+
+  /* ===== marquee (seamless two-track loop) ===== */
+  .hero-marquee{background:var(--pink); color:#fff; padding:12px 0; overflow:hidden;}
+  .hero-marquee-track{display:flex; width:max-content; animation:marqueeScroll 22s linear infinite;}
+  .hero-marquee-set{
+    display:inline-flex; flex-shrink:0; font-weight:700; letter-spacing:.08em; font-size:14px; white-space:nowrap;
+  }
+  @keyframes marqueeScroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ===== section heading pattern ===== */
+  .kicker{
+    font-family:'Baloo 2'; font-weight:800; font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--pink); text-align:center; margin-bottom:6px;
+  }
+  h2.section-title{
+    font-family:'Playball',cursive; font-weight:400; font-size:52px; text-align:center; color:var(--ink);
+    margin-bottom:14px;
+  }
+  h2.section-title em{font-style:normal; color:var(--pink);}
+  .section-sub{text-align:center; color:var(--ink-soft); max-width:560px; margin:0 auto 50px; font-size:16px; line-height:1.6;}
+
+  /* ===== about ===== */
+  .about{padding:90px 0;}
+  .about .grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
+  .about-card{
+    background:#fff; border-radius:var(--radius-lg); padding:38px; box-shadow:0 20px 40px rgba(122,92,116,.1);
+    border:2px solid var(--pink-pale);
+  }
+  .about-card p{margin-bottom:16px; line-height:1.75; color:var(--ink-soft); font-size:15.5px;}
+  .about-card p strong{color:var(--pink);}
+  .theme-pill{
+    display:inline-block; background:var(--pink-pale); color:var(--pink); font-weight:700; font-size:13px;
+    padding:6px 14px; border-radius:999px; margin-bottom:14px;
+  }
+  .about-img{position:relative;}
+  .about-img img{border-radius:var(--radius-lg); box-shadow:0 24px 50px rgba(122,92,116,.18);}
+  .stat-strip{display:flex; gap:16px; margin-top:24px;}
+  .stat{background:#fff; border-radius:16px; padding:16px 20px; text-align:center; flex:1; box-shadow:0 10px 24px rgba(122,92,116,.1);}
+  .stat .n{font-weight:800; font-size:24px; color:var(--pink);}
+  .stat .l{font-size:12px; color:var(--ink-soft); font-weight:600;}
+
+  /* ===== ticket + guest star ===== */
+  .split-two{padding:20px 0 90px;}
+  .split-two .wrap{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .panel{border-radius:var(--radius-lg); padding:36px; position:relative; overflow:hidden;}
+  .panel-ticket{background:linear-gradient(135deg,#ffe39b,#ffcf7a); }
+  .panel-guest{background:linear-gradient(135deg,#d9c8f0,#c9a8e9);}
+  .panel h3{font-family:'Playball',cursive; font-size:36px; color:var(--pink); margin-bottom:10px;}
+  .panel-guest h3{color:#5a2e7a;}
+  .panel p{color:var(--ink); opacity:.85; font-size:15px; line-height:1.6; margin-bottom:20px;}
+  .ticket-mock{
+    background:#fff; border-radius:14px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 10px 24px rgba(0,0,0,.08); margin-bottom:22px; border:2px dashed var(--pink-soft);
+  }
+  .ticket-mock .tname{font-weight:800; color:var(--pink); font-size:15px;}
+  .ticket-mock .tloc{font-size:12px; color:var(--ink-soft);}
+  .badge-soon{
+    display:inline-block; background:#fff; color:#5a2e7a; font-weight:700; font-size:12px;
+    padding:6px 14px; border-radius:999px; margin-bottom:14px;
+  }
+  .ig-tag{font-weight:700; color:#5a2e7a;}
+
+  /* ===== competitions carousel ===== */
+  .competitions{padding:20px 0 100px;}
+  .carousel{display:flex; align-items:center; justify-content:center; gap:22px; max-width:1100px; margin:0 auto;}
+  .car-arrow{
+    flex:0 0 auto; width:58px; height:58px; border-radius:50%; border:2px solid var(--pink-soft);
+    background:#fff; color:var(--pink); font-size:20px; cursor:pointer; box-shadow:0 8px 20px rgba(122,92,116,.12);
+    transition:transform .15s ease;
+  }
+  .car-arrow:hover{transform:scale(1.08); background:var(--pink); color:#fff;}
+  .car-track{display:flex; align-items:center; justify-content:center; flex:1; min-height:420px; position:relative;}
+  .car-card{
+    background:#fff; border-radius:var(--radius-lg); text-align:center; cursor:pointer;
+    box-shadow:0 14px 30px rgba(122,92,116,.12); border:2px solid var(--pink-pale);
+    transition:box-shadow .3s ease, border-color .3s ease;
+  }
+  .car-center{
+    width:380px; padding:52px 36px 40px; transform:scale(1); opacity:1; z-index:2;
+    box-shadow:0 28px 60px rgba(236,29,139,.24);
+  }
+  .car-side{
+    width:250px; padding:30px 20px 24px; transform:scale(.82); opacity:.42; margin:0 -34px; z-index:1;
+  }
+  .car-side:hover{opacity:.72;}
+  .car-card .icon-wrap{
+    width:150px; height:150px; margin:0 auto 18px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle, var(--pink-pale), transparent 70%);
+  }
+  .car-side .icon-wrap{width:104px; height:104px;}
+  .car-card .icon-wrap.icon-dark{background:radial-gradient(circle, #cfead9 0%, #12081c 72%);}
+  .car-card img{width:126px; height:126px; object-fit:contain;}
+  .car-side img{width:84px; height:84px;}
+  .car-card h4{font-size:19px; font-weight:800; color:var(--ink); margin-bottom:6px;}
+  .car-side h4{font-size:14px;}
+  .car-card .tag{font-size:12px; font-weight:700; color:var(--pink); text-transform:uppercase; letter-spacing:.04em;}
+  .car-dots{display:flex; justify-content:center; gap:8px; margin-top:34px;}
+  .car-dots .dot{width:9px; height:9px; border-radius:50%; background:var(--pink-pale); cursor:pointer; transition:all .25s ease;}
+  .car-dots .dot.active{background:var(--pink); width:22px; border-radius:6px;}
+
+  @keyframes carPopCenter{
+    0%{opacity:.3; transform:scale(.86) translateY(6px);}
+    60%{opacity:1; transform:scale(1.03) translateY(-2px);}
+    100%{opacity:1; transform:scale(1) translateY(0);}
+  }
+  @keyframes carPopSide{
+    0%{opacity:0; transform:scale(.7);}
+    100%{opacity:.42; transform:scale(.82);}
+  }
+  .car-center.car-anim{animation:carPopCenter .45s cubic-bezier(.22,.9,.34,1);}
+  .car-side.car-anim{animation:carPopSide .45s cubic-bezier(.22,.9,.34,1);}
+
+  /* ===== competition modal ===== */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:200; background:rgba(74,46,68,.55); backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:#fff; border-radius:var(--radius-lg); padding:40px; max-width:440px; width:100%; text-align:center;
+    position:relative; box-shadow:0 30px 60px rgba(0,0,0,.25); animation:popIn .25s ease;
+  }
+  @keyframes popIn{from{transform:scale(.9); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .modal-close{
+    position:absolute; top:14px; right:16px; background:none; border:none; font-size:26px; color:var(--ink-soft); cursor:pointer;
+  }
+  .modal-icon{
+    width:120px; height:120px; margin:0 auto 16px; border-radius:50%;
+    background:radial-gradient(circle, var(--pink-pale), transparent 70%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-icon img{width:100px; height:100px; object-fit:contain;}
+  .modal-box h3{font-family:'Playball',cursive; font-size:30px; color:var(--pink); margin-bottom:10px;}
+  .modal-box p{color:var(--ink-soft); font-size:15px; line-height:1.65; margin-bottom:24px;}
+
+  /* ===== tnc tabs ===== */
+  .tnc{padding:20px 0 100px;}
+  .tnc-tabs{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:36px;}
+  .tnc-tab{
+    background:#fff; border:2px solid var(--pink-pale); color:var(--ink-soft); font-weight:700; font-size:13.5px;
+    padding:10px 18px; border-radius:999px; cursor:pointer;
+  }
+  .tnc-tab.active{background:var(--pink); color:#fff; border-color:var(--pink);}
+  .tnc-panel{
+    display:none; background:#fff; border-radius:var(--radius-lg); padding:40px; max-width:820px; margin:0 auto;
+    box-shadow:0 20px 50px rgba(122,92,116,.12); border:2px solid var(--pink-pale);
+  }
+  .tnc-panel.active{display:block;}
+  .tnc-panel h4{font-family:'Playball',cursive; font-size:28px; color:var(--pink); margin:22px 0 10px;}
+  .tnc-panel h4:first-child{margin-top:0;}
+  .tnc-panel ol{padding-left:20px; margin-bottom:6px;}
+  .tnc-panel li{color:var(--ink-soft); font-size:14.5px; line-height:1.7; margin-bottom:4px;}
+  .tnc-panel ul.plain{list-style:none; padding:0;}
+  .tnc-panel ul.plain li{display:flex; justify-content:space-between; border-bottom:1px dashed var(--pink-pale); padding:6px 0;}
+  .soon-box{
+    text-align:center; padding:60px 20px; color:var(--ink-soft); font-weight:700; font-size:18px;
+  }
+  .soon-box .big{font-family:'Playball',cursive; font-size:34px; color:var(--pink); display:block; margin-bottom:8px;}
+
+  /* ===== sponsors ===== */
+  .sponsors{padding:20px 0 100px;}
+  .sponsor-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:820px; margin:0 auto;}
+  .sponsor-card{background:#fff; border-radius:var(--radius-md); padding:28px; box-shadow:0 14px 30px rgba(122,92,116,.1); border:2px solid var(--pink-pale);}
+  .sponsor-card h4{font-family:'Playball',cursive; font-size:26px; color:var(--pink); margin-bottom:16px;}
+  .contact-row{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed var(--pink-pale); font-size:14px;}
+  .contact-row:last-child{border-bottom:none;}
+  .contact-row .who{font-weight:700; color:var(--ink);}
+  .contact-row .num{color:var(--ink-soft);}
+
+  /* ===== throwback / gallery ===== */
+  .throwback{padding:20px 0 100px;}
+  .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .gallery-grid img{border-radius:16px; height:180px; width:100%; object-fit:cover; box-shadow:0 10px 24px rgba(122,92,116,.15);}
+  .gallery-grid .tall{grid-row:span 2; height:376px;}
+
+  /* ===== footer (dark neon, per reference) ===== */
+  footer{
+    background:radial-gradient(circle at 20% 0%, #241033 0%, #12081c 55%, #0a0512 100%);
+    color:#e9dcf0; padding:80px 0 28px; margin-top:70px; position:relative; overflow:hidden;
+  }
+  .foot-marquee{
+    background:rgba(255,255,255,.04); padding:10px 0; font-size:12px; letter-spacing:.15em; color:#8a7a9c;
+    white-space:nowrap; overflow:hidden; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  footer .wrap{display:grid; grid-template-columns:1.2fr 0.8fr 1fr 1fr; gap:40px; padding-top:56px;}
+  .foot-brand h5{font-family:'Playball',cursive; font-size:34px; background:linear-gradient(90deg,#ff6fd8,#8f7dfb); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:14px;}
+  .foot-brand p{color:#b6a6c4; font-size:14px; line-height:1.7; margin-bottom:20px; max-width:280px;}
+  .foot-social{display:flex; gap:10px;}
+  .foot-social a{
+    width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+    display:flex; align-items:center; justify-content:center; font-size:15px; color:#e9dcf0; transition:all .2s ease;
+  }
+  .foot-social a:hover{background:linear-gradient(135deg,#ff6fd8,#8f7dfb); border-color:transparent; transform:translateY(-3px);}
+  footer h6{font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#4dffcf; margin-bottom:18px;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:12px; font-size:14px; color:#b6a6c4;}
+  footer li a:hover{color:#ff6fd8;}
+  .foot-partner-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .foot-partner-grid .ptag{
+    border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:9px 10px; font-size:12.5px; font-weight:600;
+    color:#d8c4ff; text-align:center; background:rgba(255,255,255,.03);
+  }
+  .foot-contact li{display:flex; gap:10px; align-items:flex-start; margin-bottom:16px;}
+  .foot-contact .ic{color:#4dffcf; flex:0 0 auto;}
+  .foot-map{color:#4dffcf; font-weight:700; font-size:13px;}
+  .foot-scrolltop{
+    position:absolute; right:32px; bottom:100px; width:42px; height:42px; border-radius:50%;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); color:#e9dcf0;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; text-decoration:none;
+  }
+  .foot-scrolltop:hover{background:linear-gradient(135deg,#ff6fd8,#8f7dfb);}
+  .foot-bottom{
+    border-top:1px solid rgba(255,255,255,.08); margin-top:56px; padding-top:22px; text-align:center;
+    font-size:12.5px; color:#7a6a8c;
+  }
+  .foot-bottom .made{margin-top:6px; color:#5a4c6c;}
+  .foot-bottom .made span{color:#ff6fd8;}
+
+  @media(max-width:980px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero-art{order:-1;}
+    .hero h1{font-size:54px;}
+    .about .grid{grid-template-columns:1fr;}
+    .split-two .wrap{grid-template-columns:1fr;}
+    .sponsor-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid .tall{grid-row:auto; height:180px;}
+    footer .wrap{grid-template-columns:1fr 1fr; gap:32px;}
+    .navlinks{display:none;}
+    .car-side{display:none;}
+    .car-center{width:280px; padding:34px 24px 28px;}
+    .car-center .icon-wrap{width:120px; height:120px;}
+    .car-center img{width:100px; height:100px;}
+    .car-arrow{width:44px; height:44px;}
+  }
+  @media(max-width:560px){
+    footer .wrap{grid-template-columns:1fr;}
+    .foot-scrolltop{right:16px; bottom:70px;}
+  }
+
+  /* ===== accessibility: respect reduced-motion ===== */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .hero-art img{animation:none;}
+    .hero-marquee-track{animation:none;}
+    .scroll-cue span{animation:none; opacity:1; transform:none;}
+    .car-center.car-anim, .car-side.car-anim{animation:none;}
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="blobfield"></div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#home"><img src="https://www.figma.com/api/mcp/asset/b8a36ace-ec41-44ad-bed0-1639e962b3d3.png" alt="Xpanswara"></a>
+    <div class="navlinks">
+      <a href="#tentang">Tentang</a>
+      <a href="#kompetisi">Kompetisi</a>
+      <a href="#guest-star">Guest Star</a>
+      <a href="#ketentuan">Juknis</a>
+      <a href="#sponsor">Sponsor</a>
+      <a href="#galeri">Galeri</a>
+    </div>
+    <a class="navcta" href="#tiket">Beli Tiket</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-copy reveal">
+      <div class="hero-badges">
+        <span class="eyebrow">SMA NEGERI 10 BANDUNG · PENTAS SENI TAHUNAN</span>
+        <span class="eyebrow eyebrow-solid">2026</span>
+      </div>
+      <div class="hero-logo-plate"><img class="hero-logo" src="https://www.figma.com/api/mcp/asset/b8a36ace-ec41-44ad-bed0-1639e962b3d3.png" alt="Xpanswara Spectralis"></div>
+      <p class="tagline">Many Colors, One Stage — dalam ragam, kita bersinar. Satu panggung untuk semua warna bakat dan kreativitas.</p>
+
+      <div class="countdown-label">Menuju Hari-H</div>
+      <div class="countdown" id="countdown">
+        <div class="box"><div class="num" id="cd-hari">00</div><div class="lbl">Hari</div></div>
+        <div class="box"><div class="num" id="cd-jam">00</div><div class="lbl">Jam</div></div>
+        <div class="box"><div class="num" id="cd-menit">00</div><div class="lbl">Menit</div></div>
+        <div class="box"><div class="num" id="cd-detik">00</div><div class="lbl">Detik</div></div>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#kompetisi">Jelajahi Kompetisi</a>
+        <a class="btn btn-ghost" href="#tiket">Daftar Sekarang</a>
+      </div>
+
+      <div class="hero-facts">
+        <div class="fact"><strong>8</strong> Cabang Lomba</div>
+        <div class="fact-sep">✦</div>
+        <div class="fact"><strong>1</strong> Panggung Utama</div>
+        <div class="fact-sep">✦</div>
+        <div class="fact">SMAN 10 Bandung</div>
+      </div>
+    </div>
+    <div class="hero-art reveal reveal-delay-1">
+      <div class="backdrop-ring"></div>
+      <div class="backdrop"></div>
+      <div class="glow"></div>
+      <img src="https://www.figma.com/api/mcp/asset/826c4744-2313-4942-bc3c-2cca79c64d5a.png" alt="Maskot Xpanswara">
+    </div>
+  </div>
+  <a class="scroll-cue" href="#tentang" aria-label="Gulir ke bawah untuk info selengkapnya"><span></span></a>
+</section>
+
+<!-- MARQUEE -->
+<div class="hero-marquee">
+  <div class="hero-marquee-track">
+    <span class="hero-marquee-set">✦ SENI &nbsp; ✦ MUSIK &nbsp; ✦ SASTRA &nbsp; ✦ BUDAYA &nbsp; ✦ XPANSWARA &nbsp; ✦ SPECTRALIS &nbsp; ✦ 2026 &nbsp; ✦ BANDUNG &nbsp; </span>
+    <span class="hero-marquee-set" aria-hidden="true">✦ SENI &nbsp; ✦ MUSIK &nbsp; ✦ SASTRA &nbsp; ✦ BUDAYA &nbsp; ✦ XPANSWARA &nbsp; ✦ SPECTRALIS &nbsp; ✦ 2026 &nbsp; ✦ BANDUNG &nbsp; </span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about band" id="tentang">
+  <div class="wrap reveal">
+    <div class="kicker" style="grid-column:1/-1;">Tentang</div>
+    <h2 class="section-title" style="grid-column:1/-1;">Apa itu <em>Xpanswara</em></h2>
+    <div class="grid">
+      <div class="about-img">
+        <img src="https://www.figma.com/api/mcp/asset/0cf24b25-8cc5-42aa-b4be-4a5b6981ccc7.png" alt="Suasana panggung Xpanswara">
+        <div class="stat-strip">
+          <div class="stat"><div class="n">8</div><div class="l">Cabang Lomba</div></div>
+          <div class="stat"><div class="n">1</div><div class="l">Panggung Utama</div></div>
+          <div class="stat"><div class="n">2025</div><div class="l">Tahun Sebelumnya</div></div>
+        </div>
+      </div>
+      <div class="about-card">
+        <span class="theme-pill">Tema: SPECTRALIS</span>
+        <p><strong>XPANSWARA SPECTRALIS</strong> adalah pentas seni tahunan SMA Negeri 10 Bandung yang menjadi wadah bagi siswa untuk mengekspresikan bakat dan kreativitas dalam berbagai bidang seni.</p>
+        <p>Tahun ini, Xpanswara mengambil tema <strong>"Many Colors, One Stage — Dalam Ragam, Kita Bersinar"</strong>: beragam warna (many colors), satu panggung (one stage), dan semua punya kesempatan untuk bersinar bersama.</p>
+        <p>Tidak hanya menyuguhkan pertunjukan seni, SPECTRALIS juga menghadirkan bazar tenant yang menjadi ruang bagi pengunjung untuk menikmati beragam kuliner dan produk — merayakan ruang untuk bersinar sekaligus menciptakan pengalaman yang berkesan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKET + GUEST STAR -->
+<section class="split-two" id="tiket">
+  <div class="wrap reveal">
+    <div class="panel panel-ticket">
+      <span class="badge-soon">🎟️ Tiket</span>
+      <h3>Get Your Ticket!</h3>
+      <p>Nantikan tanggal pasti pelaksanaan di Lapangan Utama SMAN 10 Bandung. Amankan tiketmu lebih awal sebelum kehabisan.</p>
+      <div class="ticket-mock">
+        <div>
+          <div class="tname">XPANSWARA SPECTRALIS</div>
+          <div class="tloc">Lapangan Utama · SMAN 10 Bandung</div>
+        </div>
+        <div style="font-size:22px;">🎫</div>
+      </div>
+      <a class="btn btn-primary" href="#">Get Your Ticket Now!</a>
+    </div>
+    <div class="panel panel-guest" id="guest-star">
+      <span class="badge-soon">Guest Star</span>
+      <h3>Segera Diumumkan!</h3>
+      <p>Nantikan pengumuman line-up bintang tamu di akun Instagram <span class="ig-tag">@xpanswara2026</span>.</p>
+      <a class="btn btn-ghost" style="background:#fff;" href="#">Ikuti Update</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIONS CAROUSEL -->
+<section class="competitions band" id="kompetisi">
+  <div class="wrap reveal">
+    <div class="kicker">Acara & Lomba</div>
+    <h2 class="section-title">Saatnya <em>Berkompetisi</em></h2>
+    <p class="section-sub">8 cabang lomba untuk menyalurkan bakat di bidang musik, sastra, dan seni visual. Klik kartu untuk melihat detailnya.</p>
+
+    <div class="carousel">
+      <button class="car-arrow car-prev" onclick="carouselMove(-1)" aria-label="Sebelumnya">&#10094;</button>
+
+      <div class="car-track">
+        <div class="car-card car-side" id="car-prev-card"></div>
+        <div class="car-card car-center" id="car-center-card"></div>
+        <div class="car-card car-side" id="car-next-card"></div>
+      </div>
+
+      <button class="car-arrow car-next" onclick="carouselMove(1)" aria-label="Berikutnya">&#10095;</button>
+    </div>
+
+    <div class="car-dots" id="car-dots"></div>
+  </div>
+</section>
+
+<!-- COMPETITION DETAIL MODAL -->
+<div class="modal-overlay" id="comp-modal" onclick="closeModalBg(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-icon"><img id="modal-img" src="" alt=""></div>
+    <div class="tag" id="modal-tag" style="text-align:center; display:block; margin-bottom:8px;"></div>
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc"></p>
+    <a class="btn btn-primary" id="modal-cta" href="#ketentuan" onclick="closeModal()">Lihat Syarat & Ketentuan</a>
+  </div>
+</div>
+
+<!-- T&C -->
+<section class="tnc" id="ketentuan">
+  <div class="wrap reveal">
+    <div class="kicker">Petunjuk Teknis</div>
+    <h2 class="section-title">Syarat & <em>Ketentuan Lomba</em></h2>
+    <p class="section-sub">Pilih cabang lomba untuk melihat ketentuan lengkap.</p>
+
+    <div class="tnc-tabs">
+      <div class="tnc-tab" onclick="showTab('puisi')">Puisi Indonesia</div>
+      <div class="tnc-tab" onclick="showTab('cerpen')">Cerpen</div>
+      <div class="tnc-tab" onclick="showTab('spelling')">Spelling Bee</div>
+      <div class="tnc-tab" onclick="showTab('poster')">Poster Digital</div>
+      <div class="tnc-tab" onclick="showTab('vokal')">Vokal Grup Sunda</div>
+      <div class="tnc-tab" onclick="showTab('singing')">Singing Competition</div>
+      <div class="tnc-tab" onclick="showTab('utai')">Utai Ai</div>
+      <div class="tnc-tab active" onclick="showTab('band')">Band Audition</div>
+    </div>
+
+    <div class="tnc-panel" id="tab-puisi"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+    <div class="tnc-panel" id="tab-cerpen"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+    <div class="tnc-panel" id="tab-spelling"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+    <div class="tnc-panel" id="tab-poster"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+    <div class="tnc-panel" id="tab-vokal"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+    <div class="tnc-panel" id="tab-singing"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+    <div class="tnc-panel" id="tab-utai"><div class="soon-box"><span class="big">Coming Soon!</span>Ketentuan lomba akan segera diumumkan.</div></div>
+
+    <div class="tnc-panel active" id="tab-band">
+      <h4>Ketentuan Umum</h4>
+      <ol>
+        <li>Peserta merupakan pelajar/mahasiswa/umum.</li>
+        <li>Peserta wajib mendaftar sebelum waktu penutupan pendaftaran.</li>
+        <li>Peserta terdaftar sebagai 1 tim yang terdiri dari maksimal 5 orang anggota dan 1 orang pendamping.</li>
+        <li>Biaya pendaftaran Rp 50.000/tim (untuk 5 orang) pada tahap pendaftaran 1. Tambahan peserta dikenakan biaya Rp 10.000/orang.</li>
+        <li>Peserta wajib mengisi formulir pendaftaran yang disediakan panitia dengan tepat waktu.</li>
+        <li>Peserta wajib menjaga sportivitas dan etika selama lomba berlangsung.</li>
+        <li>Keputusan dewan juri bersifat mutlak dan tidak dapat diganggu gugat.</li>
+      </ol>
+
+      <h4>Peraturan</h4>
+      <ol>
+        <li>Peserta lomba tidak harus dari sekolah yang sama.</li>
+        <li>Peserta tidak boleh tergabung dalam 2 tim atau lebih.</li>
+        <li>Peserta dilarang menampilkan adegan tidak senonoh, mengandung unsur SARA, pornografi, atau kekerasan.</li>
+        <li>Peserta datang 20 menit sebelum penampilan.</li>
+        <li>Peserta yang telat dianggap Walk Out.</li>
+        <li>Peserta yang tidak bisa hadir tidak dapat digantikan.</li>
+        <li>Segala bentuk kecurangan sebelum, saat, atau sesudah acara akan berakibat diskualifikasi.</li>
+      </ol>
+
+      <h4>Sanksi</h4>
+      <ol>
+        <li>Terlambat tampil akan dianggap mengundurkan diri.</li>
+        <li>Melanggar aturan konten (SARA, pornografi, dll) akan langsung didiskualifikasi.</li>
+        <li>Merusak fasilitas, peserta wajib mengganti sesuai kerugian.</li>
+        <li>Jika penampilan melebihi waktu maksimal, poin penilaian akan dikurangi.</li>
+      </ol>
+
+      <h4>Ketentuan Tahap 1</h4>
+      <ol>
+        <li>Peserta terdiri dari maksimal 5 orang dan 1 orang pendamping.</li>
+        <li>Setiap tim mengunggah video rekaman penampilan ke Google Drive sesuai link pendaftaran.</li>
+        <li>Maksimal durasi video penampilan adalah 15 menit.</li>
+        <li>Setiap band menampilkan tiga lagu, salah satunya bebas bertema (non-SARA).</li>
+        <li>File diunggah dengan format nama: <em>NAMABAND_BANDAUDITION_XPANSWARA2026</em>.</li>
+        <li>Video yang diunggah harus memiliki kualitas gambar dan suara yang jelas.</li>
+        <li>Segala bentuk kecurangan dapat dilaporkan kepada panitia.</li>
+        <li>Alat musik disediakan oleh panitia.</li>
+      </ol>
+
+      <h4>Ketentuan Tahap 2</h4>
+      <ol>
+        <li>Peserta tahap 2 adalah peserta yang lolos penilaian juri tahap 1.</li>
+        <li>Peserta terdiri dari maksimal 5 orang dan 1 orang pendamping.</li>
+        <li>Peserta melakukan pendaftaran ulang melalui Google Form yang disediakan.</li>
+        <li>Biaya Rp 50.000/tim (5 orang), tambahan Rp 10.000/orang.</li>
+        <li>Setiap band menampilkan tiga lagu secara langsung di tahap 2.</li>
+        <li>Alat musik akan disediakan panitia.</li>
+        <li>Pengundian urutan tampil dilaksanakan sebelum acara berlangsung.</li>
+        <li>Segala bentuk kecurangan dapat dilaporkan kepada panitia penilaian.</li>
+      </ol>
+
+      <h4>Penilaian</h4>
+      <ul class="plain">
+        <li><span>Vokal</span><span>20%</span></li>
+        <li><span>Instrumen</span><span>20%</span></li>
+        <li><span>Aransemen & Kreativitas</span><span>20%</span></li>
+        <li><span>Kekompakan & Harmoni</span><span>15%</span></li>
+        <li><span>Penguasaan Lagu & Percaya Diri</span><span>25%</span></li>
+      </ul>
+
+      <h4>Hadiah</h4>
+      <ol>
+        <li>Seluruh peserta mendapatkan e-sertifikat.</li>
+        <li>4 band terbaik mendapat kesempatan tampil di panggung utama XPANSWARA 2026, SMAN 10 Bandung.</li>
+        <li>Band tahap 1 yang tidak lolos ke tahap 2 dapat memperoleh kesempatan tampil melalui voting terbanyak.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section class="sponsors band" id="sponsor">
+  <div class="wrap reveal">
+    <div class="kicker">Kolaborasi</div>
+    <h2 class="section-title">Sponsor, Tenant & <em>Media Partner</em></h2>
+    <div class="sponsor-grid">
+      <div class="sponsor-card">
+        <h4>Sponsor & Media Partner</h4>
+        <div class="contact-row"><span class="who">Sponsorship — Malikul</span><span class="num">+62 857-1059-4237</span></div>
+        <div class="contact-row"><span class="who">Media Partner — Szaskia</span><span class="num">+62 896-9760-6813</span></div>
+      </div>
+      <div class="sponsor-card">
+        <h4>Tenant</h4>
+        <div class="contact-row"><span class="who">Tenant — Salma</span><span class="num">+62 838-1641-4350</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THROWBACK / GALLERY -->
+<section class="throwback" id="galeri">
+  <div class="wrap reveal">
+    <div class="kicker">Kilas Balik</div>
+    <h2 class="section-title">Xpansi <em>2025</em></h2>
+    <p class="section-sub">Momen-momen berkesan dari perhelatan Xpansi tahun lalu.</p>
+    <div class="gallery-grid">
+      <img class="tall" src="https://www.figma.com/api/mcp/asset/08880715-632f-45fa-af0f-f6d53a70b534.png" alt="Panggung Xpansi 2025">
+      <img src="https://www.figma.com/api/mcp/asset/b2e6c9fd-267c-42bd-bfc3-1ecf2ace8b59.png" alt="Penampilan band">
+      <img src="https://www.figma.com/api/mcp/asset/0cf24b25-8cc5-42aa-b4be-4a5b6981ccc7.png" alt="Panitia dan peserta">
+      <img src="https://www.figma.com/api/mcp/asset/8018fa4a-dd68-4730-98aa-8593f880b4fc.png" alt="Logo Xpanswara">
+    </div>
+  </div>
+</section>
+
+<footer id="kontak">
+  <div class="foot-marquee">
+    <div style="display:inline-block;">
+      XPANSWARA SPECTRALIS &nbsp;·&nbsp; MANY COLORS, ONE STAGE &nbsp;·&nbsp; XPANSWARA SPECTRALIS &nbsp;·&nbsp; MANY COLORS, ONE STAGE &nbsp;·&nbsp;
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="foot-brand">
+      <h5>Xpanswara</h5>
+      <p>Perpaduan harmonis antara seni dan kreativitas dalam sebuah perayaan bakat pelajar.<br>Bandung, Indonesia.</p>
+      <div class="foot-social">
+        <a href="#" aria-label="Instagram">📷</a>
+        <a href="#" aria-label="TikTok">🎵</a>
+        <a href="#" aria-label="Email">✉️</a>
+      </div>
+    </div>
+    <div>
+      <h6>Navigasi</h6>
+      <ul>
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#kompetisi">Acara</a></li>
+        <li><a href="#guest-star">Guest Star</a></li>
+        <li><a href="#ketentuan">Juknis</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>Sponsor & Partner</h6>
+      <div class="foot-partner-grid">
+        <div class="ptag">Sponsorship</div>
+        <div class="ptag">Media Partner</div>
+        <div class="ptag">Tenant</div>
+        <div class="ptag">SMAN 10 BDG</div>
+      </div>
+    </div>
+    <div>
+      <h6>Kontak & Lokasi</h6>
+      <ul class="foot-contact">
+        <li><span class="ic">🏫</span><span>SMA Negeri 10 Bandung</span></li>
+        <li><span class="ic">📍</span><span>Bandung, Jawa Barat, Indonesia</span></li>
+        <li><span class="ic">✉️</span><span>xpanswara2026@gmail.com</span></li>
+        <li><span class="ic">📞</span><span>+62 857-1059-4237</span></li>
+      </ul>
+      <a class="foot-map" href="#">Lihat Peta Lokasi →</a>
+    </div>
+  </div>
+  <a class="foot-scrolltop" href="#home" aria-label="Kembali ke atas">↑</a>
+  <div class="foot-bottom">
+    © 2026 XPANSWARA SPECTRALIS · Pentas Seni Tahunan SMA Negeri 10 Bandung. All Rights Reserved.
+    <div class="made">Made with <span>♥</span> by Xpanswara Team</div>
+  </div>
+</footer>
+
+<script>
+  // Countdown — set your real event date here
+  const eventDate = new Date("2026-11-14T08:00:00+07:00").getTime();
+  function tick(){
+    const now = new Date().getTime();
+    const diff = eventDate - now;
+    if(diff <= 0){ return; }
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m = Math.floor((diff%(1000*60*60))/(1000*60));
+    const s = Math.floor((diff%(1000*60))/1000);
+    document.getElementById('cd-hari').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-jam').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-menit').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-detik').textContent = String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ===== Scroll reveal (sections fade/slide in as they enter view) =====
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('.reveal');
+  if(prefersReducedMotion){
+    revealEls.forEach(el => el.classList.add('in-view'));
+  } else if('IntersectionObserver' in window){
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
+
+  // ===== Competitions data =====
+  const competitions = [
+    { id:'puisi', name:'Puisi Indonesia', tag:'Sastra · Individu',
+      img:'https://www.figma.com/api/mcp/asset/c72f6196-a1d2-4bee-9d51-67088f041ed6.png',
+      desc:'Lomba menulis puisi berbahasa Indonesia — ruang bagi peserta menuangkan rasa dan pikiran lewat untaian kata yang puitis.' },
+    { id:'cerpen', name:'Cerpen', tag:'Sastra · Individu',
+      img:'https://www.figma.com/api/mcp/asset/76a6c157-25d4-48c7-95d1-b57e5e484c8c.png',
+      desc:'Lomba menulis cerita pendek orisinal, ruang ekspresi bagi peserta yang gemar merangkai cerita lewat kata.' },
+    { id:'spelling', name:'Spelling Bee', tag:'Bahasa',
+      img:'https://www.figma.com/api/mcp/asset/d6acfb8a-dd9b-4180-bf28-63c43c9c939f.png',
+      desc:'Kompetisi mengeja kosakata bahasa Inggris tingkat SMA yang menguji ketepatan dan kepercayaan diri peserta.' },
+    { id:'poster', name:'Poster Digital', tag:'Seni Visual',
+      img:'https://www.figma.com/api/mcp/asset/6c42a179-5446-4e5a-a74e-97fc4460a9d3.png',
+      desc:'Kompetisi desain poster digital bertema SPECTRALIS — wadah bagi siswa yang kreatif secara visual untuk unjuk karya.' },
+    { id:'vokal', name:'Vokal Grup Sunda', tag:'Budaya · Tim',
+      img:'https://www.figma.com/api/mcp/asset/5d743f09-4379-451e-8c01-9c2e3b0dda57.png',
+      desc:'Lomba vokal grup bernuansa budaya Sunda, merayakan kekayaan musik dan bahasa daerah lewat harmoni suara bersama.' },
+    { id:'singing', name:'Singing Competition', tag:'Individu',
+      img:'https://www.figma.com/api/mcp/asset/4e16cfcb-9801-44c6-8d8e-26ae780f2c24.png',
+      desc:'Kompetisi menyanyi solo untuk mereka yang ingin menyalurkan suara terbaiknya di atas panggung utama Xpanswara.' },
+    { id:'utai', name:'Utai Ai', tag:'Individu · Vokal', dark:true,
+      img:'https://www.figma.com/api/mcp/asset/58a70cd4-0eca-4c13-b3c8-b5f3337513a7.png',
+      desc:'Kompetisi tampil solo yang memadukan olah vokal dan ekspresi panggung — ruang bagi peserta menunjukkan karakter dan suara khasnya sendiri.' },
+    { id:'band', name:'Band Audition', tag:'Tim · Juknis Lengkap',
+      img:'https://www.figma.com/api/mcp/asset/51977e7f-7ee5-48ff-8d24-5c852ad6de4b.png',
+      desc:'Kompetisi band dua tahap: audisi video lalu tampil langsung di panggung utama. Juknis dan sistem penilaian lengkap tersedia di bagian Syarat & Ketentuan.' },
+  ];
+  let carIndex = 0;
+
+  function renderCarousel(){
+    const n = competitions.length;
+    const prev = competitions[(carIndex - 1 + n) % n];
+    const center = competitions[carIndex];
+    const next = competitions[(carIndex + 1) % n];
+
+    const cardHTML = (c) => `
+      <div class="icon-wrap ${c.dark ? 'icon-dark' : ''}"><img src="${c.img}" alt="${c.name}"></div>
+      <h4>${c.name}</h4>
+      <div class="tag">${c.tag}</div>
+    `;
+
+    const prevEl = document.getElementById('car-prev-card');
+    const centerEl = document.getElementById('car-center-card');
+    const nextEl = document.getElementById('car-next-card');
+
+    prevEl.innerHTML = cardHTML(prev);
+    centerEl.innerHTML = cardHTML(center);
+    nextEl.innerHTML = cardHTML(next);
+
+    // retrigger animation on every render
+    [prevEl, centerEl, nextEl].forEach(el => {
+      el.classList.remove('car-anim');
+      void el.offsetWidth; // force reflow
+      el.classList.add('car-anim');
+    });
+
+    prevEl.onclick = () => { carIndex = (carIndex - 1 + n) % n; renderCarousel(); };
+    nextEl.onclick = () => { carIndex = (carIndex + 1) % n; renderCarousel(); };
+    centerEl.onclick = () => openModal(center.id);
+
+    // dots
+    const dotsWrap = document.getElementById('car-dots');
+    dotsWrap.innerHTML = competitions.map((c,i)=>
+      `<div class="dot ${i===carIndex?'active':''}" onclick="carIndex=${i}; renderCarousel();"></div>`
+    ).join('');
+  }
+
+  function carouselMove(dir){
+    const n = competitions.length;
+    carIndex = (carIndex + dir + n) % n;
+    renderCarousel();
+  }
+
+  renderCarousel();
+
+  // ===== Modal =====
+  function openModal(id){
+    const c = competitions.find(x => x.id === id);
+    if(!c) return;
+    document.getElementById('modal-img').src = c.img;
+    document.getElementById('modal-img').alt = c.name;
+    document.getElementById('modal-tag').textContent = c.tag;
+    document.getElementById('modal-title').textContent = c.name;
+    document.getElementById('modal-desc').textContent = c.desc;
+    document.getElementById('modal-cta').onclick = function(){ closeModal(); showTab(c.id); };
+    document.getElementById('comp-modal').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('comp-modal').classList.remove('open');
+  }
+  function closeModalBg(e){
+    if(e.target.id === 'comp-modal') closeModal();
+  }
+
+  // T&C tabs
+  function showTab(key){
+    document.querySelectorAll('.tnc-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tnc-tab').forEach(t=>t.classList.remove('active'));
+    const panel = document.getElementById('tab-'+key);
+    if(panel) panel.classList.add('active');
+    const idx = ['puisi','cerpen','spelling','poster','vokal','singing','utai','band'].indexOf(key);
+    const tabs = document.querySelectorAll('.tnc-tab');
+    if(tabs[idx]) tabs[idx].classList.add('active');
+    if(panel) panel.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+</script>
+
+</body>
+</html>
